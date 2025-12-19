@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Top-Up - BLACKSHOT ORIGIN</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+<nav>
+  <h1 class="logo" data-my="BLACKSHOT ORIGIN" data-en="BLACKSHOT ORIGIN">
+    BLACKSHOT ORIGIN
+  </h1>
+
+  <div class="lang-switch">
+    <button onclick="setLang('my')">MY</button>
+    <button onclick="setLang('en')">EN</button>
+  </div>
+</nav>
+
+<!-- ================= TOPUP SECTION ================= -->
+<section class="game-section" style="padding-top:140px">
+
+<h2 data-my="TOP-UP CASH" data-en="TOP-UP CASH">TOP-UP CASH</h2>
+<p style="opacity:.8"
+   data-my="Pilih pakej dan kaedah pembayaran"
+   data-en="Select package and payment method">
+   Select package and payment method
+</p>
+
+<!-- CASH OPTIONS -->
+<div class="features">
+
+  <div class="box topup" onclick="selectAmount(100,this)">
+    <h3>100 CASH</h3>
+    <p>RM5.00</p>
+  </div>
+
+  <div class="box topup" onclick="selectAmount(250,this)">
+    <h3>250 CASH</h3>
+    <p>RM10.00</p>
+  </div>
+
+  <div class="box topup" onclick="selectAmount(500,this)">
+    <h3>500 CASH</h3>
+    <p>RM20.00</p>
+  </div>
+
+</div>
+
+<h3 style="margin-top:60px"
+    data-my="KAEDAH PEMBAYARAN"
+    data-en="PAYMENT METHOD">
+    PAYMENT METHOD
+</h3>
+
+<!-- PAYMENT -->
+<div class="features">
+  <div class="box pay" onclick="selectPay('Touch n Go',this)">Touch n Go</div>
+  <div class="box pay" onclick="selectPay('GrabPay',this)">GrabPay</div>
+  <div class="box pay" onclick="selectPay('ShopeePay',this)">ShopeePay</div>
+</div>
+
+<button class="hero-btn play" onclick="confirmTopup()" style="margin-top:40px"
+        data-my="SAHKAN TOP-UP"
+        data-en="CONFIRM TOP-UP">
+  CONFIRM TOP-UP
+</button>
+
+</section>
+
+<!-- ================= SCRIPT ================= -->
+<script>
+/* ========== LOGIN CHECK ========== */
+if (localStorage.getItem("playerLogin") !== "true") {
+  alert("Please login first");
+  window.location.href = "login.html";
+}
+
+/* ========== LANGUAGE ========== */
+function setLang(lang) {
+  document.querySelectorAll("[data-my]").forEach(el => {
+    el.innerHTML = el.getAttribute("data-" + lang);
+  });
+  localStorage.setItem("lang", lang);
+}
+
+/* ========== TOPUP SYSTEM ========== */
+let selectedAmount = 0;
+let payment = "";
+
+function selectAmount(amount, el){
+  selectedAmount = amount;
+
+  document.querySelectorAll(".topup").forEach(b => b.style.borderColor="#333");
+  el.style.borderColor = "orange";
+}
+
+function selectPay(method, el){
+  payment = method;
+
+  document.querySelectorAll(".pay").forEach(b => b.style.borderColor="#333");
+  el.style.borderColor = "orange";
+}
+
+function confirmTopup(){
+  if (!selectedAmount || !payment) {
+    alert("Please select CASH and PAYMENT METHOD");
+    return;
+  }
+
+  let current = parseInt(localStorage.getItem("balance")) || 0;
+  localStorage.setItem("balance", current + selectedAmount);
+
+  alert("Top-Up Success!\n+" + selectedAmount + " CASH");
+  window.location.href = "index.html";
+}
+
+/* INIT */
+document.addEventListener("DOMContentLoaded",()=>{
+  setLang(localStorage.getItem("lang") || "en");
+});
+</script>
+
+</body>
+</html>

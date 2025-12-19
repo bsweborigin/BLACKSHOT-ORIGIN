@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register - BLACKSHOT ORIGIN</title>
+
+  <meta name="theme-color" content="#ff9900">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- ================= NAVBAR (SIMPLE - TIADA HOME) ================= -->
+<nav>
+  <h1 class="logo" data-my="BLACKSHOT ORIGIN" data-en="BLACKSHOT ORIGIN">
+    BLACKSHOT ORIGIN
+  </h1>
+
+  <div class="lang-switch">
+    <button onclick="setLang('my')">MY</button>
+    <button onclick="setLang('en')">EN</button>
+  </div>
+</nav>
+
+<!-- ================= REGISTER SECTION ================= -->
+<section class="game-section" style="padding-top:140px">
+
+  <h2 data-my="PENDAFTARAN AKAUN" data-en="ACCOUNT REGISTRATION">
+    ACCOUNT REGISTRATION
+  </h2>
+
+  <p style="max-width:600px;margin:15px auto 40px;opacity:.85"
+     data-my="Daftar akaun Blackshot Origin untuk mula bermain"
+     data-en="Register a Blackshot Origin account to start playing">
+    Register a Blackshot Origin account to start playing
+  </p>
+
+  <!-- REGISTER BOX -->
+  <div class="register-box">
+    <form>
+
+      <input type="text"
+             placeholder="Nama Pengguna"
+             data-my="Nama Pengguna"
+             data-en="Username"
+             required>
+
+      <input type="password"
+             placeholder="Kata Laluan"
+             data-my="Kata Laluan"
+             data-en="Password"
+             required>
+
+      <input type="email"
+             placeholder="Emel"
+             data-my="Emel"
+             data-en="Email"
+             required>
+
+      <div class="phone-row">
+        <select>
+          <option value="+60">🇲🇾 +60</option>
+          <option value="+65">🇸🇬 +65</option>
+          <option value="+62">🇮🇩 +62</option>
+          <option value="+66">🇹🇭 +66</option>
+          <option value="+63">🇵🇭 +63</option>
+        </select>
+
+        <input type="tel"
+               placeholder="Nombor Telefon"
+               data-my="Nombor Telefon"
+               data-en="Phone Number"
+               required>
+      </div>
+
+      <button type="submit"
+              class="hero-btn play"
+              style="width:100%;margin-top:12px"
+              data-my="DAFTAR AKAUN"
+              data-en="REGISTER ACCOUNT">
+        REGISTER ACCOUNT
+      </button>
+
+    </form>
+  </div>
+
+  <!-- ACTION BUTTONS -->
+  <div class="register-actions" style="margin-top:35px">
+    <a href="login.html"
+       class="hero-btn download"
+       data-my="SUDAH ADA AKAUN? LOG MASUK"
+       data-en="ALREADY HAVE ACCOUNT? LOGIN">
+      ALREADY HAVE ACCOUNT? LOGIN
+    </a>
+
+    <a href="index.html"
+       class="hero-btn download"
+       data-my="← KEMBALI KE UTAMA"
+       data-en="← BACK TO HOME">
+      ← BACK TO HOME
+    </a>
+  </div>
+
+</section>
+
+<!-- ================= MUSIC ================= -->
+<audio id="bgMusic" loop preload="auto">
+  <source src="soundback.mp3" type="audio/mpeg">
+</audio>
+
+<button id="musicBtn"
+        onclick="toggleMusic()"
+        style="position:fixed;bottom:20px;right:20px">
+  🔇 MUSIC
+</button>
+
+<!-- ================= SCRIPT (ASAL, TAK DIUSIK) ================= -->
+<script>
+/* LANGUAGE */
+function setLang(lang) {
+  document.querySelectorAll("[data-my]").forEach(el => {
+    const text = el.getAttribute("data-" + lang);
+    if (el.tagName === "INPUT") {
+      el.placeholder = text;
+    } else {
+      el.innerHTML = text;
+    }
+  });
+  localStorage.setItem("lang", lang);
+}
+
+/* MUSIC */
+const music = document.getElementById("bgMusic");
+const btn = document.getElementById("musicBtn");
+music.volume = 0.35;
+
+let musicState = localStorage.getItem("music") || "off";
+
+document.addEventListener("click", () => {
+  if (musicState === "on") {
+    music.play().catch(()=>{});
+    btn.innerHTML = "🔊 MUSIC";
+  }
+}, { once:true });
+
+function toggleMusic() {
+  if (music.paused) {
+    music.play().catch(()=>{});
+    btn.innerHTML = "🔊 MUSIC";
+    localStorage.setItem("music","on");
+    musicState = "on";
+  } else {
+    music.pause();
+    btn.innerHTML = "🔇 MUSIC";
+    localStorage.setItem("music","off");
+    musicState = "off";
+  }
+}
+
+/* INIT */
+document.addEventListener("DOMContentLoaded", () => {
+  setLang(localStorage.getItem("lang") || "en");
+  if (musicState === "on") btn.innerHTML = "🔊 MUSIC";
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Login - BLACKSHOT ORIGIN</title>
+  <meta name="theme-color" content="#ff9900">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+<nav>
+  <h1 class="logo">
+    <a href="index.html"
+       style="color:orange;text-decoration:none"
+       data-my="BLACKSHOT ORIGIN"
+       data-en="BLACKSHOT ORIGIN">
+      BLACKSHOT ORIGIN
+    </a>
+  </h1>
+
+  <div class="lang-switch">
+    <button onclick="setLang('my')">MY</button>
+    <button onclick="setLang('en')">EN</button>
+  </div>
+</nav>
+
+<!-- ================= LOGIN SECTION ================= -->
+<section class="game-section" style="padding-top:140px">
+
+  <h2 data-my="LOG MASUK AKAUN" data-en="ACCOUNT LOGIN">
+    ACCOUNT LOGIN
+  </h2>
+
+  <p style="max-width:600px;margin:15px auto 40px;opacity:.85"
+     data-my="Log masuk untuk meneruskan permainan"
+     data-en="Login to continue playing">
+    Login to continue playing
+  </p>
+
+  <!-- LOGIN BOX -->
+  <div class="register-box">
+    <form onsubmit="loginUser(event)">
+
+      <input type="text"
+             placeholder="Nama Pengguna"
+             data-my="Nama Pengguna"
+             data-en="Username"
+             required>
+
+      <input type="password"
+             placeholder="Kata Laluan"
+             data-my="Kata Laluan"
+             data-en="Password"
+             required>
+
+      <button type="submit"
+              class="hero-btn play"
+              style="width:100%;margin-top:15px"
+              data-my="LOG MASUK"
+              data-en="LOGIN">
+        LOGIN
+      </button>
+
+    </form>
+  </div>
+
+  <!-- EXTRA LINKS -->
+  <div style="margin-top:60px;display:flex;flex-direction:column;gap:20px;align-items:center">
+
+    <a href="register.html"
+       class="hero-btn download"
+       data-my="DAFTAR AKAUN BARU"
+       data-en="CREATE NEW ACCOUNT">
+      CREATE NEW ACCOUNT
+    </a>
+
+    <a href="index.html"
+       class="hero-btn download"
+       data-my="← KEMBALI KE UTAMA"
+       data-en="← BACK TO HOME">
+      ← BACK TO HOME
+    </a>
+
+  </div>
+
+</section>
+
+<!-- ================= MUSIC ================= -->
+<audio id="bgMusic" loop preload="auto">
+  <source src="soundback.mp3" type="audio/mpeg">
+</audio>
+
+<button id="musicBtn"
+        onclick="toggleMusic()"
+        style="position:fixed;bottom:20px;right:20px">
+  🔇 MUSIC
+</button>
+
+<!-- ================= SCRIPT ================= -->
+<script>
+/* ========== LANGUAGE (ASAL) ========== */
+function setLang(lang) {
+  document.querySelectorAll("[data-my]").forEach(el => {
+    const text = el.getAttribute("data-" + lang);
+    if (!text) return;
+
+    if (el.tagName === "INPUT") {
+      el.placeholder = text;
+    } else {
+      el.textContent = text;
+    }
+  });
+  localStorage.setItem("lang", lang);
+}
+
+/* ========== LOGIN (ASAL + FIX SAHAJA) ========== */
+function loginUser(e) {
+  e.preventDefault();
+
+  // ASAL
+  localStorage.setItem("playerLogin", "true");
+  localStorage.setItem("playerName", "Player");
+
+  // FIX KECIL (TAK KACAU ASAL)
+  if (!localStorage.getItem("balance")) {
+    localStorage.setItem("balance", "0");
+  }
+
+  alert("Login successful!");
+
+  // FIX: TERUS KE TOPUP
+  window.location.href = "topup.html";
+}
+
+/* ========== MUSIC (ASAL) ========== */
+const music = document.getElementById("bgMusic");
+const btn = document.getElementById("musicBtn");
+music.volume = 0.35;
+
+let musicState = localStorage.getItem("music") || "off";
+
+document.addEventListener("click", () => {
+  if (musicState === "on") {
+    music.play().catch(()=>{});
+    btn.textContent = "🔊 MUSIC";
+  }
+}, { once:true });
+
+function toggleMusic() {
+  if (music.paused) {
+    music.play().catch(()=>{});
+    btn.textContent = "🔊 MUSIC";
+    localStorage.setItem("music","on");
+    musicState = "on";
+  } else {
+    music.pause();
+    btn.textContent = "🔇 MUSIC";
+    localStorage.setItem("music","off");
+    musicState = "off";
+  }
+}
+
+/* ========== INIT (ASAL) ========== */
+document.addEventListener("DOMContentLoaded", () => {
+  setLang(localStorage.getItem("lang") || "en");
+  if (musicState === "on") btn.textContent = "🔊 MUSIC";
+});
+</script>
+
+</body>
+</html>

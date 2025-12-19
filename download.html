@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <!-- ================= META ================= -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Download - BLACKSHOT ORIGIN</title>
+
+  <meta name="description" content="Download Blackshot Origin">
+  <meta name="theme-color" content="#ff9900">
+
+  <!-- ================= CSS ================= -->
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+<nav>
+  <h1 class="logo" data-my="BLACKSHOT ORIGIN" data-en="BLACKSHOT ORIGIN">
+    BLACKSHOT ORIGIN
+  </h1>
+
+  <div class="lang-switch">
+    <button onclick="setLang('my')">MY</button>
+    <button onclick="setLang('en')">EN</button>
+  </div>
+</nav>
+
+<!-- ================= DOWNLOAD SECTION ================= -->
+<section class="game-section" style="padding-top:140px">
+
+  <h2 data-my="MUAT TURUN PERMAINAN" data-en="DOWNLOAD GAME">
+    DOWNLOAD GAME
+  </h2>
+
+  <p style="max-width:560px;margin:15px auto;opacity:.85"
+     data-my="Versi terkini permainan Blackshot Origin untuk PC Windows"
+     data-en="Latest version of Blackshot Origin for Windows PC">
+    Versi terkini permainan Blackshot Origin untuk PC Windows
+  </p>
+
+  <p style="max-width:560px;margin:0 auto 50px;opacity:.7"
+     data-my="Sila pilih salah satu server muat turun di bawah"
+     data-en="Please choose one of the download servers below">
+    Sila pilih salah satu server muat turun di bawah
+  </p>
+
+  <!-- ================= DOWNLOAD OPTIONS ================= -->
+  <div class="features">
+
+    <!-- MEDIAFIRE -->
+    <a href="https://www.mediafire.com/xxxx"
+       target="_blank"
+       rel="noopener noreferrer"
+       class="box"
+       style="text-decoration:none;color:white;text-align:center">
+
+      <img src="mediafire.png" width="64" alt="MediaFire" style="margin-bottom:15px">
+
+      <h3>MediaFire</h3>
+
+      <p data-my="Kelajuan tinggi & stabil"
+         data-en="High speed & stable">
+        Kelajuan tinggi & stabil
+      </p>
+
+      <small style="display:block;opacity:.7;margin-top:15px">
+        Version: v1.2<br>
+        Size: ~1.8GB<br>
+        Platform: Windows
+      </small>
+    </a>
+
+    <!-- GOOGLE DRIVE -->
+    <a href="https://drive.google.com/xxxx"
+       target="_blank"
+       rel="noopener noreferrer"
+       class="box"
+       style="text-decoration:none;color:white;text-align:center">
+
+      <img src="google.png" width="64" alt="Google Drive" style="margin-bottom:15px">
+
+      <h3>Google Drive</h3>
+
+      <p data-my="Server alternatif yang selamat"
+         data-en="Safe alternative server">
+        Server alternatif yang selamat
+      </p>
+
+      <small style="display:block;opacity:.7;margin-top:15px">
+        Version: v1.2<br>
+        Size: ~1.8GB<br>
+        Platform: Windows
+      </small>
+    </a>
+
+  </div>
+
+  <!-- ================= NOTE ================= -->
+  <p style="max-width:600px;margin:40px auto 0;opacity:.6;font-size:14px"
+     data-my="Pastikan antivirus dimatikan sementara semasa pemasangan"
+     data-en="Please disable antivirus temporarily during installation">
+    Pastikan antivirus dimatikan sementara semasa pemasangan
+  </p>
+
+  <!-- ================= BACK BUTTON ================= -->
+  <div style="margin-top:70px">
+    <a href="index.html"
+       class="hero-btn download"
+       data-my="← Kembali ke Utama"
+       data-en="← Back to Home">
+      ← Back to Home
+    </a>
+  </div>
+
+</section>
+
+<!-- ================= MUSIC ================= -->
+<audio id="bgMusic" loop preload="auto">
+  <source src="soundback.mp3" type="audio/mpeg">
+</audio>
+
+<button id="musicBtn"
+  onclick="toggleMusic()"
+  style="
+    position:fixed;
+    bottom:20px;
+    right:20px;
+    padding:10px 18px;
+    background:#000;
+    border:2px solid #ff9900;
+    color:#ff9900;
+    font-weight:bold;
+    cursor:pointer;
+    z-index:9999;
+  ">
+  🔇 MUSIC
+</button>
+
+<!-- ================= SCRIPT ================= -->
+<script>
+/* ================= LANGUAGE ================= */
+function setLang(lang) {
+  document.querySelectorAll("[data-my]").forEach(el => {
+    el.innerHTML = el.getAttribute("data-" + lang);
+  });
+  localStorage.setItem("lang", lang);
+}
+
+/* ================= MUSIC (FIXED & STABLE) ================= */
+const music = document.getElementById("bgMusic");
+const btn = document.getElementById("musicBtn");
+
+music.volume = 0.35;
+
+let musicState = localStorage.getItem("music") || "off";
+let audioUnlocked = localStorage.getItem("audioUnlocked") === "yes";
+
+/* UNLOCK AUDIO (browser policy fix) */
+document.addEventListener("click", () => {
+  if (!audioUnlocked) {
+    music.play().then(() => {
+      music.pause();
+      localStorage.setItem("audioUnlocked","yes");
+      audioUnlocked = true;
+
+      if (musicState === "on") {
+        music.play().catch(()=>{});
+        btn.textContent = "🔊 MUSIC";
+      }
+    }).catch(()=>{});
+  }
+}, { once:true });
+
+/* TOGGLE MUSIC */
+function toggleMusic() {
+  if (!audioUnlocked) {
+    localStorage.setItem("audioUnlocked","yes");
+    audioUnlocked = true;
+  }
+
+  if (music.paused) {
+    music.play().catch(()=>{});
+    btn.textContent = "🔊 MUSIC";
+    localStorage.setItem("music","on");
+    musicState = "on";
+  } else {
+    music.pause();
+    btn.textContent = "🔇 MUSIC";
+    localStorage.setItem("music","off");
+    musicState = "off";
+  }
+}
+
+/* INIT */
+document.addEventListener("DOMContentLoaded", () => {
+  setLang(localStorage.getItem("lang") || "en");
+
+  if (musicState === "on" && audioUnlocked) {
+    music.play().catch(()=>{});
+    btn.textContent = "🔊 MUSIC";
+  }
+});
+</script>
+
+</body>
+</html>
