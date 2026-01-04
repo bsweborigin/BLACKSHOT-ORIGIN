@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ms">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard - BLACKSHOT ORIGIN</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  
+  <!-- ================= LOGIN PROTECTION (ASAL) ================= -->
+  <script>
+    if (localStorage.getItem("playerLogin") !== "true") {
+      window.location.href = "login.html";
+    }
+  </script>
+  
+  <!-- ================= NAVBAR (ASAL) ================= -->
+  <nav>
+    <h1 class="logo">BLACKSHOT ORIGIN</h1>
+    
+    <div style="display:flex;gap:20px;align-items:center">
+      <strong style="color:orange">
+        CASH: <span id="balance">0</span>
+      </strong>
+      
+      <button onclick="logout()" style="background:none;border:1px solid orange;color:white;padding:6px 14px;cursor:pointer">
+        LOGOUT
+      </button>
+    </div>
+  </nav>
+  
+  <!-- ================= DASHBOARD SECTION (ASAL) ================= -->
+  <section class="game-section" style="padding-top:140px">
+    
+    <h2>PLAYER DASHBOARD</h2>
+    
+    <p style="margin-top:20px;opacity:.85">
+      Welcome back, <strong id="playerName">Player</strong>
+    </p>
+    
+    <div style="margin:40px 0">
+      <a href="topup.html" class="hero-btn play">
+        TOP-UP CASH
+      </a>
+    </div>
+    
+    <h3 style="margin-top:60px">TOP-UP HISTORY</h3>
+    
+    <div id="historyBox" style="max-width:600px;margin:20px auto;text-align:left;opacity:.9">
+    </div>
+    
+  </section>
+  
+  <!-- ================= SCRIPT ================= -->
+  <script>
+    /* ASAL */
+    function logout() {
+      localStorage.removeItem("playerLogin");
+      localStorage.removeItem("playerName");
+      window.location.href = "login.html";
+    }
+    
+    /* ASAL */
+    function renderHistory() {
+      const box = document.getElementById("historyBox");
+      const history = JSON.parse(localStorage.getItem("topupHistory")) || [];
+      
+      if (history.length === 0) {
+        box.innerHTML = "<p style='opacity:.6'>No top-up record</p>";
+        return;
+      }
+      
+      box.innerHTML = history.map(h => `
+    <div style="
+      border-bottom:1px solid #333;
+      padding:12px 0;
+      display:flex;
+      justify-content:space-between;
+    ">
+      <span>+${h.amount} CASH<br><small>${h.payment}</small></span>
+      <small style="opacity:.7">${h.date}</small>
+    </div>
+  `).join("");
+    }
+    
+    /* ================= FUNCTION 1 (TAMBAH + FIX SELAMAT) ================= */
+    function verifyBalance() {
+      const balance = localStorage.getItem("balance");
+      let sig = localStorage.getItem("balance_sig");
+      
+      /* TAMBAH: auto create signature jika belum ada */
+      if (balance && !sig) {
+        sig = btoa(balance + "|BSO-SECURE-2025");
+        localStorage.setItem("balance_sig", sig);
+        return;
+      }
+      
+      if (!balance || !sig) return;
+      
+      const validSig = btoa(balance + "|BSO-SECURE-2025");
+      
+      if (sig !== validSig) {
+        alert("CHEAT DETECTED!\nAccount logged out.");
+        localStorage.clear();
+        window.location.href = "login.html";
+      }
+    }
+    /* ============================================================= */
+    
+    /* INIT (ASAL + 1 BARIS TAMBAH) */
+    document.addEventListener("DOMContentLoaded", () => {
+      
+      verifyBalance();
+      
+      document.getElementById("playerName").textContent =
+        localStorage.getItem("playerName") || "Player";
+      
+      document.getElementById("balance").textContent =
+        localStorage.getItem("balance") || 0;
+      
+      renderHistory();
+    });
+  </script>
+  
+</body>
+
+</html>

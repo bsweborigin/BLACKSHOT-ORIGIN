@@ -4,14 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Register - BLACKSHOT ORIGIN</title>
-
   <meta name="theme-color" content="#ff9900">
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<!-- ================= NAVBAR (SIMPLE - TIADA HOME) ================= -->
+<!-- ================= NAVBAR ================= -->
 <nav>
   <h1 class="logo" data-my="BLACKSHOT ORIGIN" data-en="BLACKSHOT ORIGIN">
     BLACKSHOT ORIGIN
@@ -37,29 +36,32 @@
   </p>
 
   <!-- REGISTER BOX -->
-  <div class="register-box">
-    <form>
+  <div class="register-box" style="max-width:400px;margin:auto;padding:30px;border:1px solid #333;background:#111">
+    <form onsubmit="registerUser(event)">
 
       <input type="text"
+             id="regUsername"
              placeholder="Nama Pengguna"
              data-my="Nama Pengguna"
              data-en="Username"
              required>
 
       <input type="password"
+             id="regPassword"
              placeholder="Kata Laluan"
              data-my="Kata Laluan"
              data-en="Password"
              required>
 
       <input type="email"
+             id="regEmail"
              placeholder="Emel"
              data-my="Emel"
              data-en="Email"
              required>
 
-      <div class="phone-row">
-        <select>
+      <div class="phone-row" style="display:flex;gap:10px;margin-top:10px">
+        <select id="regPhoneCode">
           <option value="+60">🇲🇾 +60</option>
           <option value="+65">🇸🇬 +65</option>
           <option value="+62">🇮🇩 +62</option>
@@ -68,6 +70,7 @@
         </select>
 
         <input type="tel"
+               id="regPhoneNumber"
                placeholder="Nombor Telefon"
                data-my="Nombor Telefon"
                data-en="Phone Number"
@@ -86,7 +89,7 @@
   </div>
 
   <!-- ACTION BUTTONS -->
-  <div class="register-actions" style="margin-top:35px">
+  <div class="register-actions" style="margin-top:35px;display:flex;flex-direction:column;gap:15px;align-items:center">
     <a href="login.html"
        class="hero-btn download"
        data-my="SUDAH ADA AKAUN? LOG MASUK"
@@ -109,13 +112,9 @@
   <source src="soundback.mp3" type="audio/mpeg">
 </audio>
 
-<button id="musicBtn"
-        onclick="toggleMusic()"
-        style="position:fixed;bottom:20px;right:20px">
-  🔇 MUSIC
-</button>
+<button id="musicBtn">🔇 MUSIC</button>
 
-<!-- ================= SCRIPT (ASAL, TAK DIUSIK) ================= -->
+<!-- ================= SCRIPT ================= -->
 <script>
 /* LANGUAGE */
 function setLang(lang) {
@@ -124,7 +123,7 @@ function setLang(lang) {
     if (el.tagName === "INPUT") {
       el.placeholder = text;
     } else {
-      el.innerHTML = text;
+      el.textContent = text;
     }
   });
   localStorage.setItem("lang", lang);
@@ -158,10 +157,23 @@ function toggleMusic() {
   }
 }
 
+/* REGISTER USER (simpan localStorage sementara) */
+function registerUser(e){
+  e.preventDefault();
+  const username = document.getElementById("regUsername").value.trim();
+  if(!username) return;
+
+  localStorage.setItem("playerLogin","true");
+  localStorage.setItem("playerName", username);
+
+  alert("Akaun berjaya didaftar! Log masuk sekarang.");
+  window.location.href="login.html";
+}
+
 /* INIT */
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded",()=>{
   setLang(localStorage.getItem("lang") || "en");
-  if (musicState === "on") btn.innerHTML = "🔊 MUSIC";
+  if(musicState==="on") btn.innerHTML="🔊 MUSIC";
 });
 </script>
 

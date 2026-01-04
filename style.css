@@ -3,11 +3,11 @@
 ========================= */
 *, *::before, *::after {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 html, body {
-  margin: 0;
-  padding: 0;
   font-family: Arial, Helvetica, sans-serif;
   background: #000;
   color: #fff;
@@ -31,21 +31,45 @@ nav {
   justify-content: space-between;
   padding: 15px 50px;
   z-index: 1000;
+  flex-wrap: wrap;
 }
 
-.logo {
-  color: orange;
-  font-size: 22px;
-  letter-spacing: 2px;
+nav .logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+nav .logo img {
+  height: 50px;
+  width: auto;
+  filter: drop-shadow(0 0 12px rgba(255,165,0,.6));
+  transition: .3s;
+}
+
+nav .logo img:hover {
+  transform: scale(1.05);
+  filter: drop-shadow(0 0 20px orange);
+}
+
+nav .logo-text {
+  font-size: 24px;
   font-weight: bold;
+  color: orange;
+  text-shadow: 0 0 6px orange;
+  transition: 0.3s;
+}
+
+nav .logo-text:hover {
+  text-shadow: 0 0 12px orange;
 }
 
 nav ul {
   list-style: none;
   display: flex;
   gap: 30px;
-  margin: 0;
-  padding: 0;
+  flex-wrap: wrap;
+  transition: max-height 0.3s ease;
 }
 
 nav ul li a {
@@ -79,9 +103,7 @@ nav ul li a:hover::after {
   width: 100%;
 }
 
-/* =========================
-   LANGUAGE SWITCH
-========================= */
+/* LANGUAGE SWITCH */
 .lang-switch {
   display: flex;
   gap: 10px;
@@ -94,6 +116,7 @@ nav ul li a:hover::after {
   padding: 6px 14px;
   cursor: pointer;
   font-size: 12px;
+  transition: 0.3s;
 }
 
 .lang-switch button:hover {
@@ -135,10 +158,10 @@ nav ul li a:hover::after {
   opacity: .9;
 }
 
-/* =========================
-   NEON TEXT
-========================= */
+/* NEON TEXT */
 .neon-text {
+  color: orange;
+  text-shadow: 0 0 10px orange, 0 0 20px orange;
   animation: rgbText 3s infinite alternate;
 }
 
@@ -148,9 +171,7 @@ nav ul li a:hover::after {
   100% { text-shadow: 0 0 10px magenta; }
 }
 
-/* =========================
-   HERO BUTTONS
-========================= */
+/* HERO BUTTONS */
 .hero-buttons {
   display: flex;
   justify-content: center;
@@ -164,8 +185,9 @@ nav ul li a:hover::after {
   font-size: 16px;
   text-decoration: none;
   border: 2px solid orange;
-  animation: glowPulse 2s infinite;
   text-align: center;
+  transition: 0.3s;
+  animation: glowPulse 2s infinite;
 }
 
 .hero-btn.play {
@@ -176,6 +198,17 @@ nav ul li a:hover::after {
 .hero-btn.download {
   background: transparent;
   color: white;
+}
+
+.hero-btn.play:hover {
+  background: darkorange;
+  box-shadow: 0 0 25px orange;
+}
+
+.hero-btn.download:hover {
+  background: orange;
+  color: black;
+  box-shadow: 0 0 20px orange;
 }
 
 @keyframes glowPulse {
@@ -212,12 +245,10 @@ nav ul li a:hover::after {
   padding: 15px 0;
   border-bottom: 1px solid #333;
   list-style: none;
+  transition: 0.3s;
 }
 
-.patch-notes li::before {
-  content: "◆";
-  color: orange;
-}
+.patch-notes li:hover { background: rgba(255,165,0,.1); }
 
 .version {
   color: cyan;
@@ -226,7 +257,7 @@ nav ul li a:hover::after {
 }
 
 /* =========================
-   GAME SECTION (GLOBAL)
+   GAME FEATURES
 ========================= */
 .game-section {
   padding: 120px 40px;
@@ -234,9 +265,6 @@ nav ul li a:hover::after {
   text-align: center;
 }
 
-/* =========================
-   FEATURES
-========================= */
 .features {
   display: flex;
   justify-content: center;
@@ -277,10 +305,13 @@ nav ul li a:hover::after {
 .slide {
   display: none;
   width: 100%;
+  cursor: zoom-in;
+  transition: opacity 0.5s ease;
 }
 
 .slide.active {
   display: block;
+  opacity: 1;
 }
 
 .slide-btn {
@@ -298,9 +329,6 @@ nav ul li a:hover::after {
 .slide-btn.left { left: 10px; }
 .slide-btn.right { right: 10px; }
 
-/* =========================
-   DOTS
-========================= */
 .dots {
   display: flex;
   justify-content: center;
@@ -321,7 +349,7 @@ nav ul li a:hover::after {
 }
 
 /* =========================
-   SYSTEM REQUIREMENT
+   SYSTEM REQUIREMENTS
 ========================= */
 .system-req {
   padding: 100px 40px;
@@ -347,75 +375,31 @@ nav ul li a:hover::after {
    REGISTER / LOGIN BOX
 ========================= */
 .register-box {
-  max-width: 420px;
+  max-width: 400px;
   margin: auto;
-  padding: 35px 28px;
-  background: linear-gradient(180deg,#111,#070707);
-  border: 2px solid orange;
-  box-shadow: 0 0 30px rgba(255,165,0,.25);
-  text-align: left;
-}
-
-.register-box form {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
+  padding: 30px;
+  border: 1px solid #333;
+  background: #111;
+  border-radius: 6px;
 }
 
 .register-box input,
 .register-box select {
-  height: 46px;
-  padding: 0 14px;
-  background: #fff;
-  color: #000;
-  border: none;
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  border: 1px solid #555;
+  background: #222;
+  color: white;
   border-radius: 4px;
-  font-size: 14px;
-  font-weight: 600;
-}
-
-.register-box input::placeholder {
-  color: #666;
+  transition: 0.3s;
 }
 
 .register-box input:focus,
 .register-box select:focus {
   outline: none;
-  box-shadow: 0 0 10px rgba(255,165,0,.8);
-}
-
-.phone-row {
-  display: flex;
-  gap: 10px;
-}
-
-.phone-row select {
-  width: 120px;
-}
-
-/* =========================
-   REGISTER / LOGIN ACTION FIX
-========================= */
-.register-actions {
-  display: flex;
-  flex-direction: column;
-  gap: 25px;
-  align-items: center;
-}
-
-/* =========================
-   TOP-UP FIX (TAMBAHAN SAHAJA)
-========================= */
-.box.topup,
-.box.pay {
-  cursor: pointer;
-}
-
-.box.topup.active,
-.box.pay.active {
-  border-color: orange;
-  box-shadow: 0 0 20px rgba(255,165,0,.7);
-  transform: scale(1.05);
+  border: 2px solid orange;
+  box-shadow: 0 0 8px orange;
 }
 
 /* =========================
@@ -432,38 +416,21 @@ nav ul li a:hover::after {
   padding: 10px 18px;
   cursor: pointer;
   z-index: 9999;
+  transition: 0.3s;
+}
+
+#musicBtn:hover {
+  background: orange;
+  color: black;
 }
 
 /* =========================
-   RESPONSIVE
-========================= */
-@media (max-width: 768px) {
-  nav {
-    padding: 15px 20px;
-    flex-wrap: wrap;
-  }
-
-  nav ul {
-    width: 100%;
-    justify-content: center;
-    margin-top: 10px;
-  }
-
-  .overlay h1 {
-    font-size: 32px;
-  }
-
-  .hero-buttons {
-    flex-direction: column;
-  }
-
-/* =========================
-   SCREENSHOT FULL VIEW
+   FULLSCREEN
 ========================= */
 .fullscreen-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, .9);
+  background: rgba(0,0,0,.9);
   display: none;
   align-items: center;
   justify-content: center;
@@ -475,6 +442,70 @@ nav ul li a:hover::after {
   max-width: 95%;
   max-height: 95%;
   border: 3px solid orange;
-  box-shadow: 0 0 40px rgba(255, 165, 0, .6);
+  box-shadow: 0 0 40px rgba(255,165,0,.6);
+  transition: opacity 0.3s ease;
 }
+
+/* =========================
+   LOADING SCREEN
+========================= */
+#loadingScreen {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  z-index: 999999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loading-box {
+  text-align: center;
+}
+
+.loading-logo {
+  width: 120px;
+  filter: drop-shadow(0 0 20px orange);
+  margin-bottom: 20px;
+}
+
+.loading-bar {
+  width: 260px;
+  height: 8px;
+  border: 1px solid orange;
+  margin: 20px auto;
+  overflow: hidden;
+}
+
+.loading-progress {
+  height: 100%;
+  width: 0%;
+  background: orange;
+  animation: loadAnim 3s linear forwards;
+}
+
+@keyframes loadAnim {
+  to { width: 100%; }
+}
+
+/* =========================
+   RESPONSIVE & HAMBURGER
+========================= */
+@media (max-width: 768px) {
+  nav {
+    padding: 15px 20px;
+    flex-wrap: wrap;
+  }
+  nav ul { width: 100%; justify-content: center; margin-top: 10px; flex-direction: column; max-height: 0; overflow: hidden; background: rgba(0,0,0,0.85); border-top: 1px solid orange; transition: max-height 0.3s ease; }
+  nav ul.show { max-height: 500px; }
+  nav ul li { text-align: center; padding: 12px 0; }
+  .nav-toggle { display: flex; flex-direction: column; justify-content: space-between; width: 30px; height: 22px; cursor: pointer; }
+  .nav-toggle span { height: 4px; width: 100%; background: orange; border-radius: 2px; transition: 0.3s; }
+  .logo img { height: 40px; }
+  .logo-text { font-size: 20px; }
+  .overlay h1 { font-size: 32px; }
+  .hero-buttons { flex-direction: column; }
+  .hero-btn { width: 100%; }
+  .patch-notes, .features, .req-box { flex-direction: column; gap: 20px; }
+  .register-box { width: 90%; padding: 20px; }
 }

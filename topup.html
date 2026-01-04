@@ -1,128 +1,186 @@
 <!DOCTYPE html>
 <html lang="ms">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Top-Up - BLACKSHOT ORIGIN</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>Top-Up - BLACKSHOT ORIGIN</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<!-- ================= NAVBAR ================= -->
-<nav>
-  <h1 class="logo" data-my="BLACKSHOT ORIGIN" data-en="BLACKSHOT ORIGIN">
-    BLACKSHOT ORIGIN
-  </h1>
+<!-- ================= LOGIN PROTECTION (ASAL) ================= -->
+<script>
+  if (localStorage.getItem("playerLogin") !== "true") {
+    alert("Sila login terlebih dahulu");
+    window.location.href = "login.html";
+  }
+</script>
 
-  <div class="lang-switch">
-    <button onclick="setLang('my')">MY</button>
-    <button onclick="setLang('en')">EN</button>
+<!-- ================= NAVBAR (ASAL) ================= -->
+<nav>
+  <h1 class="logo">BLACKSHOT ORIGIN</h1>
+
+  <div style="display:flex;gap:20px;align-items:center">
+    <strong style="color:orange">
+      CASH: <span id="balance">0</span>
+    </strong>
+
+    <button onclick="logout()"
+      style="background:none;border:1px solid orange;color:white;padding:6px 14px;cursor:pointer">
+      LOGOUT
+    </button>
   </div>
 </nav>
 
 <!-- ================= TOPUP SECTION ================= -->
 <section class="game-section" style="padding-top:140px">
 
-<h2 data-my="TOP-UP CASH" data-en="TOP-UP CASH">TOP-UP CASH</h2>
-<p style="opacity:.8"
-   data-my="Pilih pakej dan kaedah pembayaran"
-   data-en="Select package and payment method">
-   Select package and payment method
-</p>
+  <p style="opacity:.7">
+    Player: <strong id="playerName">-</strong>
+  </p>
 
-<!-- CASH OPTIONS -->
-<div class="features">
+  <h2>TOP-UP CASH</h2>
+  <p style="opacity:.8">Pilih pakej dan kaedah pembayaran</p>
 
-  <div class="box topup" onclick="selectAmount(100,this)">
-    <h3>100 CASH</h3>
-    <p>RM5.00</p>
+  <!-- TOPUP PACKAGE -->
+  <div class="features">
+    <div class="box topup" onclick="selectAmount(100,this)">
+      <h3>100 CASH</h3>
+      <p>RM5.00</p>
+    </div>
+
+    <div class="box topup" onclick="selectAmount(250,this)">
+      <h3>250 CASH</h3>
+      <p>RM10.00</p>
+    </div>
+
+    <div class="box topup" onclick="selectAmount(500,this)">
+      <h3>500 CASH</h3>
+      <p>RM20.00</p>
+    </div>
   </div>
 
-  <div class="box topup" onclick="selectAmount(250,this)">
-    <h3>250 CASH</h3>
-    <p>RM10.00</p>
+  <!-- PAYMENT -->
+  <h3 style="margin-top:60px">PAYMENT METHOD</h3>
+
+  <div class="features">
+    <div class="box pay" onclick="selectPay('Touch n Go',this)">Touch n Go</div>
+    <div class="box pay" onclick="selectPay('GrabPay',this)">GrabPay</div>
+    <div class="box pay" onclick="selectPay('ShopeePay',this)">ShopeePay</div>
   </div>
 
-  <div class="box topup" onclick="selectAmount(500,this)">
-    <h3>500 CASH</h3>
-    <p>RM20.00</p>
+  <!-- CONFIRM -->
+  <button class="hero-btn play" onclick="confirmTopup()" style="margin-top:50px">
+    CONFIRM TOP-UP
+  </button>
+
+  <!-- BACK TO HOME -->
+  <div style="margin-top:35px;text-align:center">
+    <a href="index.html" class="hero-btn download">
+      ← BACK TO HOME
+    </a>
   </div>
 
-</div>
+  <!-- HISTORY -->
+  <h3 style="margin-top:110px">TOP-UP HISTORY</h3>
 
-<h3 style="margin-top:60px"
-    data-my="KAEDAH PEMBAYARAN"
-    data-en="PAYMENT METHOD">
-    PAYMENT METHOD
-</h3>
-
-<!-- PAYMENT -->
-<div class="features">
-  <div class="box pay" onclick="selectPay('Touch n Go',this)">Touch n Go</div>
-  <div class="box pay" onclick="selectPay('GrabPay',this)">GrabPay</div>
-  <div class="box pay" onclick="selectPay('ShopeePay',this)">ShopeePay</div>
-</div>
-
-<button class="hero-btn play" onclick="confirmTopup()" style="margin-top:40px"
-        data-my="SAHKAN TOP-UP"
-        data-en="CONFIRM TOP-UP">
-  CONFIRM TOP-UP
-</button>
+  <div id="historyBox"
+    style="max-width:600px;margin:20px auto;text-align:left;opacity:.9">
+  </div>
 
 </section>
 
-<!-- ================= SCRIPT ================= -->
+<!-- ================= SCRIPT (ASAL + SELAMAT) ================= -->
 <script>
-/* ========== LOGIN CHECK ========== */
-if (localStorage.getItem("playerLogin") !== "true") {
-  alert("Please login first");
-  window.location.href = "login.html";
-}
+  let selectedAmount = 0;
+  let payment = "";
 
-/* ========== LANGUAGE ========== */
-function setLang(lang) {
-  document.querySelectorAll("[data-my]").forEach(el => {
-    el.innerHTML = el.getAttribute("data-" + lang);
-  });
-  localStorage.setItem("lang", lang);
-}
-
-/* ========== TOPUP SYSTEM ========== */
-let selectedAmount = 0;
-let payment = "";
-
-function selectAmount(amount, el){
-  selectedAmount = amount;
-
-  document.querySelectorAll(".topup").forEach(b => b.style.borderColor="#333");
-  el.style.borderColor = "orange";
-}
-
-function selectPay(method, el){
-  payment = method;
-
-  document.querySelectorAll(".pay").forEach(b => b.style.borderColor="#333");
-  el.style.borderColor = "orange";
-}
-
-function confirmTopup(){
-  if (!selectedAmount || !payment) {
-    alert("Please select CASH and PAYMENT METHOD");
-    return;
+  function selectAmount(amount, el) {
+    selectedAmount = amount;
+    document.querySelectorAll(".box.topup").forEach(b => b.classList.remove("active"));
+    el.classList.add("active");
   }
 
-  let current = parseInt(localStorage.getItem("balance")) || 0;
-  localStorage.setItem("balance", current + selectedAmount);
+  function selectPay(method, el) {
+    payment = method;
+    document.querySelectorAll(".box.pay").forEach(b => b.classList.remove("active"));
+    el.classList.add("active");
+  }
 
-  alert("Top-Up Success!\n+" + selectedAmount + " CASH");
-  window.location.href = "index.html";
-}
+  function confirmTopup() {
+    if (!selectedAmount || !payment) {
+      alert("Please select cash & payment method");
+      return;
+    }
 
-/* INIT */
-document.addEventListener("DOMContentLoaded",()=>{
-  setLang(localStorage.getItem("lang") || "en");
-});
+    let current = parseInt(localStorage.getItem("balance")) || 0;
+    const newBalance = current + selectedAmount;
+
+    localStorage.setItem("balance", newBalance);
+    localStorage.setItem("balance_sig", btoa(newBalance + "|BSO-SECURE-2025"));
+
+    const history = JSON.parse(localStorage.getItem("topupHistory")) || [];
+    history.push({
+      amount: selectedAmount,
+      payment: payment,
+      date: new Date().toLocaleString()
+    });
+    localStorage.setItem("topupHistory", JSON.stringify(history));
+
+    alert("Top-Up Success!\n+" + selectedAmount + " CASH");
+    window.location.href = "index.html";
+  }
+
+  function logout() {
+    localStorage.removeItem("playerLogin");
+    localStorage.removeItem("playerName");
+    window.location.href = "login.html";
+  }
+
+  function renderHistory() {
+    const box = document.getElementById("historyBox");
+    const history = JSON.parse(localStorage.getItem("topupHistory")) || [];
+
+    if (history.length === 0) {
+      box.innerHTML = "<p style='opacity:.6'>No top-up record</p>";
+      return;
+    }
+
+    box.innerHTML = history.map(h => `
+      <div style="
+        border-bottom:1px solid #333;
+        padding:12px 0;
+        display:flex;
+        justify-content:space-between;
+      ">
+        <span>+${h.amount} CASH<br><small>${h.payment}</small></span>
+        <small style="opacity:.7">${h.date}</small>
+      </div>
+    `).join("");
+  }
+
+  function verifyBalance() {
+    const balance = localStorage.getItem("balance");
+    const sig = localStorage.getItem("balance_sig");
+    if (!balance || !sig) return;
+
+    if (sig !== btoa(balance + "|BSO-SECURE-2025")) {
+      alert("CHEAT DETECTED!\nAccount logged out.");
+      localStorage.clear();
+      window.location.href = "login.html";
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    verifyBalance();
+    document.getElementById("playerName").textContent =
+      localStorage.getItem("playerName") || "Player";
+    document.getElementById("balance").textContent =
+      localStorage.getItem("balance") || 0;
+    renderHistory();
+  });
 </script>
 
 </body>
