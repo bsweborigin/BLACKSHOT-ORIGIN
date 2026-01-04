@@ -4,51 +4,56 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>BLACKSHOT ORIGIN</title>
-
   <meta name="description" content="Official website for Blackshot Origin">
   <meta name="theme-color" content="#ff9900">
-
   <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
 <!-- ========================= NAVBAR ========================= -->
 <nav>
-  <h1 class="logo" data-my="BLACKSHOT ORIGIN" data-en="BLACKSHOT ORIGIN">
-    BLACKSHOT ORIGIN
-  </h1>
+  <div class="logo">
+    <img src="logoatas.png" alt="BS Logo">
+    <span class="logo-text">ORIGIN</span>
+  </div>
 
-  <ul>
+  <div class="nav-toggle" id="navToggle">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <ul id="navMenu">
     <li><a href="#home" data-my="Utama" data-en="Home">Home</a></li>
     <li><a href="#features" data-my="Ciri" data-en="Features">Features</a></li>
     <li><a href="#screenshots" data-my="Skrin" data-en="Screenshots">Screenshots</a></li>
     <li><a href="#system" data-my="Keperluan" data-en="System">System</a></li>
   </ul>
 
-  <div class="lang-switch">
-    <button onclick="setLang('my')">MY</button>
-    <button onclick="setLang('en')">EN</button>
+  <div style="display:flex;gap:15px;align-items:center">
+    <strong style="color:orange;font-size:14px">
+      CASH: <span id="balance">0</span>
+    </strong>
+    <div class="lang-switch">
+      <button onclick="setLang('my')">MY</button>
+      <button onclick="setLang('en')">EN</button>
+    </div>
+    <button id="logoutBtn" onclick="logout()" style="display:none;background:#c0392b;color:#fff;border:none;padding:6px 12px;border-radius:4px;cursor:pointer">
+      LOGOUT
+    </button>
   </div>
 </nav>
 
 <!-- ========================= HERO ========================= -->
 <section class="hero" id="home">
   <div class="overlay">
-
     <h1 class="neon-text" data-my="SELAMAT DATANG" data-en="WELCOME">WELCOME</h1>
-
-    <p data-my="Website ini dibuat sendiri" data-en="This website is self-made">
-      Website ini dibuat sendiri
-    </p>
-
+    <p data-my="Website ini dibuat sendiri" data-en="This website is self-made">Website ini dibuat sendiri</p>
     <div class="hero-buttons">
       <a href="login.html" class="hero-btn play" data-my="LOG MASUK" data-en="LOGIN">LOGIN</a>
       <a href="download.html" class="hero-btn download" data-my="MUAT TURUN" data-en="DOWNLOAD">DOWNLOAD</a>
-      <a href="register.html" class="hero-btn download" data-my="DAFTAR AKAUN" data-en="REGISTER ACCOUNT">REGISTER</a>
+      <a href="register.html" class="hero-btn download" data-my="DAFTAR AKAUN" data-en="REGISTER">REGISTER</a>
     </div>
-
-    <!-- PATCH NOTES (ASAL) -->
     <div class="patch-notes">
       <h3 data-my="NOTA KEMAS KINI" data-en="PATCH NOTES">PATCH NOTES</h3>
       <ul>
@@ -63,34 +68,24 @@
         </li>
       </ul>
     </div>
-
   </div>
 </section>
 
-<!-- ========================= FEATURES ========================= -->
+<!-- ========================= GAME FEATURES ========================= -->
 <section class="game-section" id="features">
   <h2 data-my="CIRI PERMAINAN" data-en="GAME FEATURES">GAME FEATURES</h2>
-
   <div class="features">
     <div class="box">
       <h3>Fast Action</h3>
-      <p data-my="Permainan pantas dan agresif" data-en="Fast-paced action gameplay">
-        Fast-paced action gameplay
-      </p>
+      <p data-my="Permainan pantas dan agresif" data-en="Fast-paced action gameplay">Fast-paced action gameplay</p>
     </div>
-
     <div class="box">
       <h3>Multiplayer</h3>
-      <p data-my="Bermain bersama rakan" data-en="Play together with friends">
-        Play together with friends
-      </p>
+      <p data-my="Bermain bersama rakan" data-en="Play together with friends">Play together with friends</p>
     </div>
-
     <div class="box">
       <h3>HD Graphics</h3>
-      <p data-my="Grafik berkualiti tinggi" data-en="High quality graphics">
-        High quality graphics
-      </p>
+      <p data-my="Grafik berkualiti tinggi" data-en="High quality graphics">High quality graphics</p>
     </div>
   </div>
 </section>
@@ -98,37 +93,29 @@
 <!-- ========================= SCREENSHOTS ========================= -->
 <section class="screenshots" id="screenshots">
   <h2 data-my="TANGKAPAN SKRIN" data-en="SCREENSHOTS">SCREENSHOTS</h2>
-
   <div class="slider">
     <button class="slide-btn left" onclick="prevSlide()">❮</button>
-
     <div class="slides">
       <img src="slide1.jpeg" class="slide active">
       <img src="slide2.jpeg" class="slide">
       <img src="slide3.jpeg" class="slide">
     </div>
-
     <div class="dots">
       <span class="dot active" onclick="goSlide(0)"></span>
       <span class="dot" onclick="goSlide(1)"></span>
       <span class="dot" onclick="goSlide(2)"></span>
     </div>
-
     <button class="slide-btn right" onclick="nextSlide()">❯</button>
   </div>
 </section>
 
-<!-- ========================= FULLSCREEN VIEW (TAMBAHAN SAHAJA) ========================= -->
 <div id="fullscreenView" class="fullscreen-overlay" onclick="closeFullscreen()">
   <img id="fullscreenImg">
 </div>
 
-<!-- ========================= SYSTEM REQUIREMENTS (ASAL DIPULIHKAN) ========================= -->
+<!-- ========================= SYSTEM REQUIREMENTS ========================= -->
 <section class="system-req" id="system">
-  <h2 data-my="KEPERLUAN SISTEM" data-en="SYSTEM REQUIREMENTS">
-    SYSTEM REQUIREMENTS
-  </h2>
-
+  <h2 data-my="KEPERLUAN SISTEM" data-en="SYSTEM REQUIREMENTS">SYSTEM REQUIREMENTS</h2>
   <div class="req-box">
     <div class="req">
       <h3 data-my="MINIMUM" data-en="MINIMUM">MINIMUM</h3>
@@ -138,7 +125,6 @@
         <li>4GB RAM</li>
       </ul>
     </div>
-
     <div class="req">
       <h3 data-my="DISYORKAN" data-en="RECOMMENDED">RECOMMENDED</h3>
       <ul>
@@ -151,96 +137,120 @@
 </section>
 
 <!-- ========================= MUSIC ========================= -->
-<audio id="bgMusic" loop preload="auto">
+<audio id="bgMusic" loop playsinline>
   <source src="soundback.mp3" type="audio/mpeg">
 </audio>
+<button id="musicBtn" onclick="toggleMusic()">🔇 MUSIC</button>
 
-<button id="musicBtn"
-  onclick="toggleMusic()"
-  style="position:fixed;bottom:20px;right:20px;z-index:9999">
-  🔇 MUSIC
-</button>
+<!-- ========================= LOADING SCREEN ========================= -->
+<div id="loadingScreen">
+  <div class="loading-box">
+    <img src="logoatas.png" class="loading-logo">
+    <h2>BLACKSHOT ORIGIN</h2>
+    <div class="loading-bar">
+      <div class="loading-progress"></div>
+    </div>
+    <p>LOADING WEBSITE</p>
+    <p>ANY HACKING WILL BE BAN</p>
+  </div>
+</div>
 
 <!-- ========================= SCRIPT ========================= -->
 <script>
-/* LANGUAGE */
+/* ================= LANGUAGE ================= */
 function setLang(lang){
-  document.querySelectorAll("[data-my]").forEach(el=>{
-    const text=el.getAttribute("data-"+lang);
-    if(!text)return;
-
-    if(el.querySelector(".version")){
-      const v=el.querySelector(".version").textContent;
-      el.innerHTML=`<span class="version">${v}</span> ${text.replace(v,"").trim()}`;
+  document.querySelectorAll("[data-my][data-en]").forEach(el=>{
+    const text = el.getAttribute("data-"+lang);
+    if(!text) return;
+    if(el.tagName==="LI" && el.closest(".patch-notes") && el.querySelector(".version")){
+      const v = el.querySelector(".version").textContent;
+      el.innerHTML = `<span class="version">${v}</span> ` + text.replace(v,"").trim();
     }else{
-      el.textContent=text;
+      el.textContent = text;
     }
   });
   localStorage.setItem("lang",lang);
 }
 
-/* SLIDER */
-let currentSlide=0;
-const slides=document.querySelectorAll(".slide");
-const dots=document.querySelectorAll(".dot");
+/* ================= LOGOUT ================= */
+function logout(){ localStorage.clear(); location.href="login.html"; }
 
+/* ================= MUSIC ================= */
+let music, musicBtn, unlocked=false;
+function toggleMusic(){
+  unlocked=true;
+  if(music.paused){
+    music.play().then(()=>{ musicBtn.textContent="🔊 MUSIC"; localStorage.setItem("music","on"); }).catch(()=>{});
+  }else{
+    music.pause();
+    musicBtn.textContent="🔇 MUSIC";
+    localStorage.setItem("music","off");
+  }
+}
+function unlockMusic(){
+  if(unlocked) return;
+  unlocked=true;
+  if(localStorage.getItem("music")==="on"){
+    music.play().catch(()=>{});
+    musicBtn.textContent="🔊 MUSIC";
+  }
+}
+
+/* ================= SLIDER ================= */
+let currentSlide=0,slides=[],dots=[];
 function showSlide(i){
-  slides.forEach(s=>s.classList.remove("active"));
-  dots.forEach(d=>d.classList.remove("active"));
+  slides.forEach((s,idx)=>{
+    s.classList.remove("active");
+    s.style.opacity="0";
+    dots[idx].classList.remove("active");
+  });
   slides[i].classList.add("active");
+  slides[i].style.opacity="1";
   dots[i].classList.add("active");
 }
-function nextSlide(){currentSlide=(currentSlide+1)%slides.length;showSlide(currentSlide);}
-function prevSlide(){currentSlide=(currentSlide-1+slides.length)%slides.length;showSlide(currentSlide);}
-function goSlide(i){currentSlide=i;showSlide(i);}
-setInterval(nextSlide,5000);
+function nextSlide(){ currentSlide=(currentSlide+1)%slides.length; showSlide(currentSlide); }
+function prevSlide(){ currentSlide=(currentSlide-1+slides.length)%slides.length; showSlide(currentSlide); }
+function goSlide(i){ currentSlide=i; showSlide(i); }
 
-/* FULLSCREEN SCREENSHOT (TAMBAH TANPA KACAU) */
+/* ================= FULLSCREEN ================= */
+let fullscreenView,fullscreenImg;
 function openFullscreen(img){
   fullscreenImg.src=img.src;
   fullscreenView.style.display="flex";
+  fullscreenImg.style.opacity="0";
+  setTimeout(()=>fullscreenImg.style.opacity="1",50);
 }
-function closeFullscreen(){
-  fullscreenView.style.display="none";
-}
-document.addEventListener("DOMContentLoaded",()=>{
-  document.querySelectorAll(".slide").forEach(img=>{
-    img.style.cursor="zoom-in";
-    img.onclick=()=>openFullscreen(img);
-  });
+function closeFullscreen(){ fullscreenView.style.display="none"; }
+
+/* ================= HAMBURGER MENU ================= */
+const navToggle=document.getElementById('navToggle');
+const navMenu=document.getElementById('navMenu');
+navToggle.addEventListener('click', ()=>{
+  navMenu.classList.toggle('show');
+  navToggle.classList.toggle('active');
 });
 
-/* MUSIC */
-const music=document.getElementById("bgMusic");
-const btn=document.getElementById("musicBtn");
-music.volume=0.35;
-let musicState=localStorage.getItem("music")||"off";
-
-document.addEventListener("click",()=>{
-  if(musicState==="on"){
-    music.play().catch(()=>{});
-    btn.textContent="🔊 MUSIC";
-  }
-},{once:true});
-
-function toggleMusic(){
-  if(music.paused){
-    music.play().catch(()=>{});
-    btn.textContent="🔊 MUSIC";
-    localStorage.setItem("music","on");
-    musicState="on";
-  }else{
-    music.pause();
-    btn.textContent="🔇 MUSIC";
-    localStorage.setItem("music","off");
-    musicState="off";
-  }
-}
-
-/* INIT */
+/* ================= INIT ================= */
 document.addEventListener("DOMContentLoaded",()=>{
   setLang(localStorage.getItem("lang")||"en");
-  showSlide(currentSlide);
+  slides=document.querySelectorAll(".slide");
+  dots=document.querySelectorAll(".dot");
+  showSlide(0);
+  setInterval(nextSlide,5000);
+  fullscreenView=document.getElementById("fullscreenView");
+  fullscreenImg=document.getElementById("fullscreenImg");
+  slides.forEach(img=>img.onclick=()=>openFullscreen(img));
+  music=document.getElementById("bgMusic");
+  musicBtn=document.getElementById("musicBtn");
+  music.volume=0.35;
+  document.addEventListener("click", unlockMusic, { once:true });
+  document.addEventListener("touchstart", unlockMusic, { once:true });
+  if(localStorage.getItem("music")==="on"){ musicBtn.textContent="🔊 MUSIC"; }
+});
+
+/* ================= LOADING SCREEN ================= */
+window.addEventListener("load",()=>{
+  setTimeout(()=>{ document.getElementById("loadingScreen").style.display="none"; },2500);
 });
 </script>
 
